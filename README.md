@@ -18,13 +18,19 @@ The possible parameters are:
 /?              Display the help
 
 #### Examples:
-```ds D:\```
+```
+ds D:\
+```
 This will list all directories in drive D:, by default the program will display groupped, sorted descending
 
-```ds D:\Games\ /u
+```
+ds D:\Games\ /u
+```
 This will display the contained subfolders of D:\Games\ sorting by size descending and mixing files and folders
 
-```ds C:\Users\ /s```
+```
+ds C:\Users\ /s
+```
 This will display the contents of C:\Users sorting by size ascending, groupping (directories first, then files).
 
 
