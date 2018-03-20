@@ -38,8 +38,6 @@ This will display the contents of C:\Users sorting by size ascending, groupping 
 This is a software written by an amateur in his spare time, so have no huge expectations. Currently, due to Windows limitations*, some of the files can not be read by this app, thus the size displayed, might slight vary
 from its actual size. During tests - the differences were not quite significant, but still it has to be kept in mind. The very idea I started working on this was to have some way of sorting all directories, 
 without having to open the properties in each of it.
-________________________________________________________________
-* PathTooLong - when path exceeds 260 characters the program cannot read it. UnauthorizedPermission - when the program has no permissions to read certain system/temporary files
 
 #### Plans
 * Fixing bugs that will come out, 
