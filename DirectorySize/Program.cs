@@ -38,46 +38,46 @@ namespace DirectorySize
             int sanityCheck = 0;
             int duplicateCheck = 0;
 
+            foreach (var arg in args)
+            {
+                if (arg == "/s" || arg == "/S")
+                {
+                    duplicateCheck++;
+                }
+                switch (arg)
+                {
+                    case "/s":
+                        desc = false;
+                        break;
+                    case "/S":
+                        desc = true;
+                        break;
+                    case "/u":
+                        unsort = true;
+                        break;
+                    case "/?":
+                        Console.WriteLine(hi + "\n" + help);
+                        break;
+                    default:
+                        sanityCheck++;
+                        break;
+                }
+            }
+
             if (args.Length == sanityCheck && args.Length != 0 && !Directory.Exists(args[0]))
             {
                 Console.WriteLine("Invalid arguments supplied!\n");
                 Console.WriteLine(help);
             }
 
-            if (duplicateCheck > 1)
+            else if (duplicateCheck > 1)
             {
                 Console.WriteLine("You need to specify either ascending [/s] or descending [/S], not both\n");
                 Console.WriteLine(help);
             }
 
-            else
-            {
-                foreach (var arg in args)
-                {
-                    if (arg == "/s" || arg == "/S")
-                    {
-                        duplicateCheck++;
-                    }
-                    switch (arg)
-                    {
-                        case "/s":
-                            desc = false;
-                            break;
-                        case "/S":
-                            desc = true;
-                            break;
-                        case "/u":
-                            unsort = true;
-                            break;
-                        case "/?":
-                            Console.WriteLine(hi + "\n" + help);
-                            break;
-                        default:
-                            sanityCheck++;
-                            break;
-                    }
-                }
-            }
+            
+            
             List<FileSystem> allItems = FileSystemManage.ListAllItems(currentPath, desc, unsort);
             
             Console.WriteLine("{0,-50}\t{1,-10}\t{2}", "Name", "Size", "Type");
