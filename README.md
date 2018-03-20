@@ -4,6 +4,7 @@
 #### About:
 DirectorySize is a lightweight console application that is intended to quickly calculate the size of all subfolders of the provided folder and the contained files. It can be manipulated
 to sort by folder/file (showing folders first) or unsorted - sorting based on user choice, or by default - by size, descending. Currently the app support only sort by size.
+Executable can be found [here](http://pest-art.com/ds/ds.exe)
 
 #### Usage:
 In order to effortlessly use the app - you need to download it in one of the following folders:
