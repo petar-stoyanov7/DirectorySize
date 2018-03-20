@@ -39,8 +39,14 @@ This will display the contents of C:\Users sorting by size ascending, groupping 
 This is a software written by an amateur in his spare time, so have no huge expectations. Currently, due to Windows limitations*, some of the files can not be read by this app, thus the size displayed, might slight vary
 from its actual size. During tests - the differences were not quite significant, but still it has to be kept in mind. The very idea I started working on this was to have some way of sorting all directories, 
 without having to open the properties in each of it.
+The results may strongly vary from what File Explorer's properties will show, as it turns out it doesn't calculate quite accurately
+the sizes of directories. For proper results you need to run "dir /a /s" in the command prompt.
 
 #### Plans
 * Fixing bugs that will come out, 
 * working around the Windows limitations to accurate size, creating GUI.
 * create installer
+
+#### Thanks:
+* To Stilgar Naibov for his patience and advises.
+* To Maciej Pulikowski from Stack Overflow for pointing out the issue with Windows' File Explorer.
