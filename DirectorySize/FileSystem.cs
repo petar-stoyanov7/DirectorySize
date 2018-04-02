@@ -1,29 +1,34 @@
 ﻿using System.IO;
 using System;
 
+
 namespace DirectorySize
 {
     public class FileSystem
     {
         public readonly string Name;
         public readonly string Path;
+        public readonly long Count;
         public readonly long Size;
         public readonly bool IsDir;
 
         public FileSystem(string path, string search = "*.*")
-        {            
+        {
             this.Path = path;
             if (Directory.Exists(path))
             {
                 this.Name = new DirectoryInfo(path).Name;
-                this.IsDir = true;                
-                this.Size = CalculateSize(new DirectoryInfo(path), search);
+                this.IsDir = true;
+                var calculation = CalculateSize(new DirectoryInfo(path), search);
+                this.Size = calculation[0];
+                this.Count = calculation[1];
             }
 
             else if (File.Exists(path))
             {
                 this.Name = new FileInfo(path).Name;
                 this.Size = new FileInfo(path).Length;
+                this.Count = 1;
                 this.IsDir = false;
             }
 
@@ -35,9 +40,11 @@ namespace DirectorySize
             }
         }
 
-        public static long CalculateSize(DirectoryInfo dir, string search = "*.*")
+        public static long[] CalculateSize(DirectoryInfo dir, string search = "*.*")
         {
-            long result = 0;
+            long[] result = new long[2];
+            long size = 0;
+            long count = 0;
             FileInfo[] files = null;
             DirectoryInfo[] subDirs = null;
             try
@@ -59,15 +66,19 @@ namespace DirectorySize
             {
                 foreach (var file in files)
                 {
-                    result += file.Length;
+                    size += file.Length;
+                    count++;
                 }
 
                 subDirs = dir.GetDirectories(search, SearchOption.TopDirectoryOnly);
                 foreach (var directory in subDirs)
                 {
-                    result += CalculateSize(directory, search);
+                    size += CalculateSize(directory, search)[0];
+                    count += CalculateSize(directory, search)[1];
                 }
             }
+            result[0] = size;
+            result[1] = count;
             return result;
         }
     }

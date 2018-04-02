@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DirectorySize
 {
@@ -22,86 +23,75 @@ namespace DirectorySize
         {
             List<FileSystem> result = new List<FileSystem>();
             var list = Directory.GetFiles(path, search, SearchOption.TopDirectoryOnly);
-            foreach (var directory in list)
+            foreach (var file in list)
             {
-                result.Add(new FileSystem(directory, search));
+                result.Add(new FileSystem(file, search));
             }
             return result;
         }
 
         public static List<FileSystem> SortBySize(List<FileSystem> list, bool desc = true)
         {
-            var buffer = new List<FileSystem>(list);
-            var result = new List<FileSystem>();
+            List<FileSystem> result = new List<FileSystem>();
             if (desc)
             {
-                while (result.Count < list.Count)
-                {
-                    double max = -1;
-                    for (var i = 0; i < buffer.Count; i++)
-                    {
-                        if (buffer[i].Size > max)
-                        {
-                            max = buffer[i].Size;
-                        }
-                    }
-                    var index = 0;
-                    for (var i = 0; i < buffer.Count; i++)
-                    {
-                        if (buffer[i].Size == max)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-                    result.Add(buffer[index]);
-                    buffer.RemoveAt(index);
-                }
+                result = list.OrderByDescending(p => p.Size).ToList();
             }
-
             else
             {
-                while (result.Count < list.Count)
-                {
-                    double min = buffer[0].Size;
-                    for (var i = 0; i < buffer.Count; i++)
-                    {
-                        if (buffer[i].Size < min)
-                        {
-                            min = buffer[i].Size;
-                        }
-                    }
-                    var index = 0;
-                    for (var i = 0; i < buffer.Count; i++)
-                    {
-                        if (buffer[i].Size == min)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-                    result.Add(buffer[index]);
-                    buffer.RemoveAt(index);
-                }
+                result = list.OrderBy(p => p.Size).ToList();
             }
             return result;
         }
 
-        public static List<FileSystem> ListAllItems(string path, bool desc = true, bool unsort = false)
+        public static List<FileSystem> SortByCount(List<FileSystem> list, bool desc = true)
         {
             List<FileSystem> result = new List<FileSystem>();
-            if (unsort)
+            if (desc)
             {
-                List<FileSystem> buffer = new List<FileSystem>();
-                buffer.AddRange(ListSubDirectories(path));
-                buffer.AddRange(ListCurrentFiles(path));
-                result = SortBySize(buffer, desc);
+                result = list.OrderByDescending(p => p.Count).ToList();
             }
             else
             {
-                result = SortBySize(ListSubDirectories(path));
-                result.AddRange(SortBySize(ListCurrentFiles(path)));
+                result = list.OrderBy(p => p.Count).ToList();
             }
+            return result;
+        }
+
+        public static List<FileSystem> ListAllItems(string path, bool size = true, bool desc = true, bool unsort = false)
+        {
+            List<FileSystem> result = new List<FileSystem>();
+            if (size)
+            {
+                if (unsort)
+                {
+                    List<FileSystem> buffer = new List<FileSystem>();
+                    buffer.AddRange(ListSubDirectories(path));
+                    buffer.AddRange(ListCurrentFiles(path));
+                    result = SortBySize(buffer, desc);
+                }
+                else
+                {
+                    result = SortBySize(ListSubDirectories(path), desc);
+                    result.AddRange(SortBySize(ListCurrentFiles(path), desc));
+                }
+            }
+            else
+            {
+                if (unsort)
+                {
+                    List<FileSystem> buffer = new List<FileSystem>();
+                    buffer.AddRange(ListSubDirectories(path));
+                    buffer.AddRange(ListCurrentFiles(path));
+                    result = SortByCount(buffer, desc);
+                }
+                else
+                {
+                    result = SortByCount(ListSubDirectories(path), desc);
+                    result.AddRange(ListCurrentFiles(path));
+                }
+            }
+            
             return result;
         }
     }
