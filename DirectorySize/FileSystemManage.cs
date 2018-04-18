@@ -7,7 +7,7 @@ namespace DirectorySize
 
     public static class FileSystemManage
     {
-        public static List<FileSystem> ListSubDirectories(string path, string search = "*.*")
+        private static List<FileSystem> ListSubDirectories(string path, string search = "*.*")
         {
             List<FileSystem> result = new List<FileSystem>();
             var list = Directory.GetDirectories(path);
@@ -19,7 +19,7 @@ namespace DirectorySize
             return result;
         }
 
-        public static List<FileSystem> ListCurrentFiles(string path, string search = "*.*")
+        private static List<FileSystem> ListCurrentFiles(string path, string search = "*.*")
         {
             List<FileSystem> result = new List<FileSystem>();
             var list = Directory.GetFiles(path, search, SearchOption.TopDirectoryOnly);
@@ -30,7 +30,7 @@ namespace DirectorySize
             return result;
         }
 
-        public static List<FileSystem> SortBySize(List<FileSystem> list, bool desc = true)
+        private static List<FileSystem> SortBySize(List<FileSystem> list, bool desc = true)
         {
             List<FileSystem> result = new List<FileSystem>();
             if (desc)
@@ -44,7 +44,7 @@ namespace DirectorySize
             return result;
         }
 
-        public static List<FileSystem> SortByCount(List<FileSystem> list, bool desc = true)
+        private static List<FileSystem> SortByCount(List<FileSystem> list, bool desc = true)
         {
             List<FileSystem> result = new List<FileSystem>();
             if (desc)
