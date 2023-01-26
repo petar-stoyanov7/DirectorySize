@@ -1,4 +1,8 @@
 # DirectorySize
+
+## Abandoned:
+This can be considered as an abandonware - I haven't used C# in years and at the moment can't spare the time to rethink and reconsider it.
+
 ## A simple Windows application for calculating directory size and sorting the results
 
 #### About:
